@@ -114,6 +114,9 @@ class DataTrainingArguments:
     overwrite_cache: bool = field(
         default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
     )
+    skim: bool = field(
+        default=False, metadata={"help": "Run skim model and generate train_null_odds.json file"}
+    )
     preprocessing_num_workers: Optional[int] = field(
         default=None,
         metadata={"help": "The number of processes to use for the preprocessing."},
@@ -291,6 +294,8 @@ def main():
             cache_dir=model_args.cache_dir,
             use_auth_token=True if model_args.use_auth_token else None,
         )
+        if data_args.skim:
+            raw_datasets['validation'] = raw_datasets['train'] 
     else:
         data_files = {}
         if data_args.train_file is not None:
@@ -305,8 +310,13 @@ def main():
             extension = data_args.test_file.split(".")[-1]
         raw_datasets = load_dataset(
             extension,
-            data_files=data_files
+            data_files=data_files,
+            field="data",
+            cache_dir=model_args.cache_dir,
+            use_auth_token=True if model_args.use_auth_token else None
         )
+        print("datasets ytong 2")
+        print(raw_datasets['validation'])
     # See more about loading any type of standard or custom dataset (from files, python dict, pandas DataFrame, etc) at
     # https://huggingface.co/docs/datasets/loading_datasets.html.
 
