@@ -114,8 +114,8 @@ class DataTrainingArguments:
     overwrite_cache: bool = field(
         default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
     )
-    skim: bool = field(
-        default=False, metadata={"help": "Run skim model and generate train_null_odds.json file"}
+    train_skim: bool = field(
+        default=False, metadata={"help": "Train skim model and generate train_null_odds.json file"}
     )
     preprocessing_num_workers: Optional[int] = field(
         default=None,
@@ -294,8 +294,9 @@ def main():
             cache_dir=model_args.cache_dir,
             use_auth_token=True if model_args.use_auth_token else None,
         )
-        if data_args.skim:
-            raw_datasets['validation'] = raw_datasets['train'] 
+        if data_args.train_skim:
+            #raw_datasets['validation'] = raw_datasets['train']
+            raw_datasets['validation'] = raw_datasets['train'].select(range(100))
     else:
         data_files = {}
         if data_args.train_file is not None:

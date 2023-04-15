@@ -168,6 +168,6 @@ tags
 # ruff
 .ruff_cache
 
-# Test
+# Local
 SAVED_MODEL/
-DATA/
+SPANBERT_SKIM_DIR/
