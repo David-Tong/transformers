@@ -305,10 +305,7 @@ def main():
             extension = data_args.test_file.split(".")[-1]
         raw_datasets = load_dataset(
             extension,
-            data_files=data_files,
-            field="data",
-            cache_dir=model_args.cache_dir,
-            use_auth_token=True if model_args.use_auth_token else None,
+            data_files=data_files
         )
     # See more about loading any type of standard or custom dataset (from files, python dict, pandas DataFrame, etc) at
     # https://huggingface.co/docs/datasets/loading_datasets.html.
