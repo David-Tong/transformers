@@ -295,8 +295,7 @@ def main():
             use_auth_token=True if model_args.use_auth_token else None,
         )
         if data_args.train_skim:
-            #raw_datasets['validation'] = raw_datasets['train']
-            raw_datasets['validation'] = raw_datasets['train'].select(range(100))
+            raw_datasets['validation'] = raw_datasets['train']
     else:
         data_files = {}
         if data_args.train_file is not None:
